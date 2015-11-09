@@ -33,7 +33,7 @@ $(document).ready(function() {
     $el.attr('id', todo.id);
 
     $el.append($label);
-    $label.append($checkbox).append(todo.title);
+    $label.append($checkbox).append(todo.title + " $" + todo.price);
 
     var updateCheckbox = function() {
       if (todo.completed) {
@@ -53,11 +53,13 @@ $(document).ready(function() {
   }
 
   function addTodo() {
-    var title = $('#todo-title').val();
+    var title = $('#todo-title').val(),
+        price = $('#price-title').val();
 
     // Create a todo
     dpd.todos.post({
-      title: title
+      title: title,
+      price: price
     }, function(todo, err) {
       if (err) {
         // An error could be either the err.message property, or err.errors.title, so we account for either case
@@ -66,6 +68,7 @@ $(document).ready(function() {
       }
 
       $('#todo-title').val('');
+      $('#price-title').val('');
       renderTodo(todo);
     });
     return false;
